@@ -8,6 +8,7 @@ export async function generateMetadata(): Promise<Metadata> {
     title: 'VOID³ - Space Dodge Game',
     description: 'Dodge asteroids and set high scores in this exciting space game. Save your records on Base blockchain.',
     other: {
+      'base:app_id': '696e9561f22fe462e74c15bb',
       'fc:miniapp': JSON.stringify({
         version: 'next',
         imageUrl: `${ROOT_URL}/embed-image.png`,
