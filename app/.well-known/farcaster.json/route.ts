@@ -2,9 +2,14 @@ import { NextResponse } from 'next/server'
 
 const ROOT_URL = (process.env.NEXT_PUBLIC_URL || 'https://void3-game2.vercel.app').replace(/\/$/, '')
 
-function withValidProperties(properties: Record<string, undefined | string | string[]>) {
+function withValidProperties(properties: Record<string, undefined | string | string[] | boolean>) {
   return Object.fromEntries(
-    Object.entries(properties).filter(([_, value]) => (Array.isArray(value) ? value.length > 0 : !!value))
+    Object.entries(properties).filter(([key, value]) => {
+      // Always include noindex even if false
+      if (key === 'noindex') return true;
+      // Filter out empty values
+      return Array.isArray(value) ? value.length > 0 : (value !== undefined && value !== null && value !== '');
+    })
   )
 }
 
@@ -33,7 +38,7 @@ export async function GET() {
       //   `${ROOT_URL}/screenshot3.png`
       // ],
       primaryCategory: "games",
-      tags: ["game", "miniapp", "base", "space", "dodge", "blockchain"],
+      tags: ["game", "miniapp", "base", "space", "dodge"],
       heroImageUrl: `${ROOT_URL}/hero.png`,
       tagline: "Dodge. Survive. Dominate.",
       ogTitle: "VOID³ - Space Dodge Game",
