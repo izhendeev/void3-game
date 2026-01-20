@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Script from 'next/script'
 import './globals.css'
 
 const ROOT_URL = (process.env.NEXT_PUBLIC_URL || 'https://void3-green.vercel.app').replace(/\/$/, '')
@@ -41,7 +42,17 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Michroma&display=swap" rel="stylesheet" />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        <Script id="base-app-id" strategy="beforeInteractive" dangerouslySetInnerHTML={{
+          __html: `if (typeof document !== 'undefined') {
+            const meta = document.createElement('meta');
+            meta.setAttribute('name', 'base:app_id');
+            meta.setAttribute('content', '696e9561f22fe462e74c15bb');
+            document.head.appendChild(meta);
+          }`
+        }} />
+      </body>
     </html>
   )
 }
